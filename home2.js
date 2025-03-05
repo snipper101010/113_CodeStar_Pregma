@@ -171,3 +171,38 @@ function sendMessage() {
         }, 1000);
     }
 }
+
+function toggleAnswer(id) {
+    const answer = document.getElementById(`answer-${id}`);
+    const arrow = document.querySelector(`#answer-${id}`).previousElementSibling.querySelector('.arrow');
+
+    // Toggle answer visibility
+    answer.classList.toggle('open');
+
+    // Rotate arrow
+    if (answer.classList.contains('open')) {
+        arrow.textContent = '▲';
+    } else {
+        arrow.textContent = '▼';
+    }
+}
+
+let currentSection = 0;
+
+// Scroll to Section
+function scrollToSection(index) {
+    const container = document.querySelector('.container');
+    const sections = document.querySelectorAll('.trimester');
+    const dots = document.querySelectorAll('.dot');
+
+    // Scroll to the selected section
+    container.style.transform = `translateX(-${index * 100}vw)`;
+
+    // Update active dot
+    dots.forEach((dot, i) => {
+        dot.classList.toggle('active', i === index);
+    });
+}
+
+// Initialize first dot as active
+document.querySelector('.dot').classList.add('active');

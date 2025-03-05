@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mood Tracker</title>
+    <style>
+        /* General Styles */
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            background: url(background.jpeg) no-repeat center center fixed;
+            background-size: cover;
+            color: #333;
+        }
+
+        .overlay {
+         background: rgba(228, 92, 83, 0.8); 
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 400px;
+            margin: 20px auto;
+            padding: 20px;
+            background: white;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            border-radius: 15px;
+            transition: all 0.3s ease;
+        }
+
+        h2 {
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        p {
+            margin-bottom: 20px;
+            color: #666;
+        }
+
+        .mood-images {
+            display: flex;
+            justify-content: space-around;
+            margin: 20px 0;
+        }
+
+        .mood-image {
+            width: 50px;
+            height: 50px;
+            cursor: pointer;
+            transition: transform 0.3s ease, opacity 0.3s ease, box-shadow 0.3s ease;
+            border-radius: 10px;
+        }
+
+        .mood-image:hover {
+            transform: scale(1.2) translateY(-10px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            opacity: 0.9;
+        }
+
+        textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-top: 10px;
+            resize: none;
+        }
+
+        .submit-btn {
+            background: linear-gradient(to right, #28a745, #32CD32);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 10px;
+            transition: background 0.3s ease, transform 0.3s ease;
+        }
+
+        .submit-btn:hover {
+            background: linear-gradient(to right, #32CD32, #28a745);
+            transform: scale(1.05);
+        }
+
+        .emergency-btn {
+            background: red;
+            color: white;
+            border: none;
+            padding: 15px;
+            border-radius: 50%;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            width: 80px;
+            height: 80px;
+            margin-top: 15px;
+            transition: background 0.3s ease, transform 0.3s ease;
+        }
+
+        .emergency-btn:hover {
+            background: darkred;
+            transform: scale(1.1);
+        }
+
+        .additional-questions {
+            display: none;
+            margin-top: 20px;
+            text-align: left;
+        }
+
+        .additional-questions label {
+            display: block;
+            margin: 10px 0 5px;
+            color: #333;
+        }
+
+        .additional-questions select, .additional-questions input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+
+        /* Pop-up Message */
+        .popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 20px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            z-index: 1000;
+        }
+
+        .popup p {
+            margin: 0;
+            font-size: 18px;
+            color: #333;
+        }
+
+        .overlay-blur {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(5px);
+            z-index: 999;
+            display: none;
+        }
+
+        /* Themes */
+        .theme-blue {
+            background-color: #e3f2fd;
+        }
+
+        .theme-pink {
+            background-color: #fce4ec;
+        }
+
+        .theme-red {
+            background-color: #ffebee;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 600px) {
+            .container {
+                width: 100%;
+                margin: 10px;
+                padding: 15px;
+            }
+
+            .mood-image {
+                width: 40px;
+                height: 40px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="overlay">
+        <div class="container theme-blue" id="container">
+            <h2>How are you feeling?</h2>
+            <p>Your input helps us improve our service.</p>
+            <div class="mood-images">
+                <img src="cry.jpeg" alt="Sad" class="mood-image" data-mood="sad">
+                
+                <img src="calm.jpeg" alt="Neutral" class="mood-image" data-mood="neutral">
+                <img src="happy.jpeg" alt="Happy" class="mood-image" data-mood="happy">
+                <img src="angry.jpeg" alt="Very Happy" class="mood-image" data-mood="angry">
+            </div>
+            <textarea placeholder="Add a Comment..." rows="3"></textarea>
+            <div class="additional-questions" id="additional-questions">
+                <!-- Questions will be dynamically inserted here -->
+            </div>
+            <button class="submit-btn" id="submit-btn">Submit Now</button>
+            <br>
+            <button class="emergency-btn" id="sos-btn">SOS</button>
+        </div>
+    </div>
+
+    <!-- Pop-up Message -->
+    <div class="overlay-blur" id="overlay-blur"></div>
+    <div class="popup" id="popup">
+        <p>We will contact you soon!</p>
+    </div>
+
+    <script>
+        // JavaScript for Dynamic Features
+        const container = document.getElementById('container');
+        const moodImages = document.querySelectorAll('.mood-image');
+        const additionalQuestions = document.getElementById('additional-questions');
+        const submitBtn = document.getElementById('submit-btn');
+        const popup = document.getElementById('popup');
+        const overlayBlur = document.getElementById('overlay-blur');
+        const sosBtn = document.getElementById('sos-btn');
+
+        // Mood Questions
+        const moodQuestions = {
+            sad: [
+                { type: 'select', label: 'Level of Sadness:', options: ['1 - Slightly Sad', '2 - Moderately Sad', '3 - Very Sad'] },
+                { type: 'select', label: 'Level of Headache:', options: ['1 - Mild', '2 - Moderate', '3 - Severe'] },
+                { type: 'select', label: 'Level of Nausea:', options: ['1 - Mild', '2 - Moderate', '3 - Severe'] },
+                { type: 'select', label: 'Did you take your diet?', options: ['Yes', 'No'] }
+            ],
+            calm: [
+                { type: 'select', label: 'Level of Calmness:', options: ['1 - Slightly Calm', '2 - Moderately Calm', '3 - Very Calm'] },
+                { type: 'select', label: 'Did you take your diet?', options: ['Yes', 'No'] }
+            ],
+            happy: [
+                { type: 'select', label: 'Level of Happiness:', options: ['1 - Slightly Happy', '2 - Moderately Happy', '3 - Very Happy'] },
+                { type: 'select', label: 'Did you take your diet?', options: ['Yes', 'No'] }
+            ],
+            angry: [
+                { type: 'select', label: 'Level of Anger:', options: ['1 - Slightly Angry', '2 - Moderately Angry', '3 - Very Angry'] },
+                { type: 'select', label: 'Level of Headache:', options: ['1 - Mild', '2 - Moderate', '3 - Severe'] },
+                { type: 'select', label: 'Did you take your diet?', options: ['Yes', 'No'] }
+            ],
+            
+        };
+
+        // Mood Selection Logic
+        moodImages.forEach(image => {
+            image.addEventListener('click', () => {
+                const mood = image.getAttribute('data-mood');
+                additionalQuestions.innerHTML = ''; // Clear previous questions
+
+                if (moodQuestions[mood]) {
+                    moodQuestions[mood].forEach(question => {
+                        const questionDiv = document.createElement('div');
+                        questionDiv.innerHTML = `
+                            <label>${question.label}</label>
+                            <select>
+                                ${question.options.map(option => `<option value="${option}">${option}</option>`).join('')}
+                            </select>
+                        `;
+                        additionalQuestions.appendChild(questionDiv);
+                    });
+                    additionalQuestions.style.display = 'block';
+                } else {
+                    additionalQuestions.style.display = 'none';
+                }
+
+                // Change theme based on mood
+                if (mood === 'sad' || mood === 'unhappy') {
+                    container.className = 'container theme-red';
+                } else if (mood === 'neutral') {
+                    container.className = 'container theme-blue';
+                } else {
+                    container.className = 'container theme-pink';
+                }
+            });
+        });
+
+        // Submit Button Logic
+        submitBtn.addEventListener('click', () => {
+            popup.style.display = 'block';
+            overlayBlur.style.display = 'block';
+            setTimeout(() => {
+                popup.style.display = 'none';
+                overlayBlur.style.display = 'none';
+            }, 3000);
+        });
+
+        // SOS Button Logic
+        sosBtn.addEventListener('click', () => {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition((position) => {
+                    const lat = position.coords.latitude;
+                    const lng = position.coords.longitude;
+                    const hospitalUrl = `https://www.google.com/maps/search/hospital/@${lat},${lng},15z`;
+                    window.open(hospitalUrl, '_blank');
+                    alert("Contacting nearby hospitals...");
+                });
+            } else {
+                alert("Geolocation is not supported by this browser.");
+            }
+        });
+    </script>
+</body>
+</html>

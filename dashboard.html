@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pregnancy Care Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+        }
+        /* Style for the Add button */
+        .add-btn {
+            background: #ff1a4d; /* Green background */
+            color: #fff; /* White text */
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 16px;
+            transition: background 0.3s ease;
+        }
+        .add-btn:hover {
+            background: #ff1a4d; /* Darker green on hover */
+        }
+        .dashboard-container {
+            display: flex;
+            width: 100%;
+        }
+        .sidebar {
+            width: 250px;
+            background: #f8c8dc;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        .sidebar h2 {
+            text-align: center;
+            color: #333;
+        }
+        .sidebar ul {
+            list-style: none;
+            padding: 0;
+        }
+        .sidebar ul li {
+            padding: 10px;
+            cursor: pointer;
+        }
+        .main-content {
+            flex-grow: 1;
+            padding: 20px;
+            background: #fff;
+            display: flex;
+            flex-direction: column;
+        }
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .content-section {
+            display: flex;
+            margin-top: 20px;
+        }
+        .chart-container {
+            flex: 2;
+        }
+        .stats-container {
+            flex: 1;
+            margin-left: 20px;
+        }
+        .stats-card {
+            display: flex;
+            flex-direction: column;
+        }
+        .card {
+            background: #ffe6f2;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+        .action-btn {
+            background: #ff4d79;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        .reminder-section {
+            margin-top: 20px;
+            padding: 20px;
+            background: #f8c8dc;
+            border-radius: 10px;
+        }
+        .reminder-section input {
+            padding: 10px;
+            margin-right: 10px;
+            border: none;
+            border-radius: 5px;
+        }
+        .reminder-list {
+            margin-top: 10px;
+        }
+        .streak-container {
+            margin-top: 20px;
+            padding: 20px;
+            background: #ffe6f2;
+            border-radius: 10px;
+            overflow-x: auto;
+            display: flex;
+            gap: 50px;
+        }
+        .streak-grid {
+            display: grid;
+            grid-template-columns: repeat(30, 20px);
+            gap: 5px;
+            justify-content: start;
+        }
+        .streak-box {
+            width: 20px;
+            height: 20px;
+            background: #f8c8dc;
+            border-radius: 5px;
+        }
+        .streak-box.active {
+            background: #ff4d79;
+        }
+         /* Style for the remove button */
+         .reminder-list li {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 5px;
+            background: #f8c8dc;
+            margin-bottom: 5px;
+            border-radius: 5px;
+        }
+        .remove-btn {
+            background: #ff4d79;
+            color: #fff;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+            border-radius: 3px;
+        }
+        .remove-btn:hover {
+            background: #ff1a4d;
+        }
+        .streak-video video {
+            width: 250px; /* Adjust video width as needed */
+            height: auto;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-container">
+        <aside class="sidebar">
+            <h2>PregCare</h2>
+            <ul>
+                <li>Dashboard</li>
+                <li>Health & Vitals</li>
+                <li>Exercises</li>
+                <li>Nutrition</li>
+                <li>Appointments</li>
+                <li>Community</li>
+            </ul>
+        </aside>
+        
+        <main class="main-content">
+            <header>
+                <h1>Dashboard</h1>
+                <button class="action-btn">Action</button>
+            </header>
+            
+            <section class="content-section">
+                <div class="chart-container">
+                    <canvas id="pregnancyChart"></canvas>
+                </div>
+                <div class="stats-container">
+                    <div class="stats-card">
+                        <div class="card">
+                            <h3>Weight Gain</h3>
+                            <p>+5 kg</p>
+                        </div>
+                        <div class="card">
+                            <h3>Kick Counts</h3>
+                            <p>10 Today</p>
+                        </div>
+                        <div class="card">
+                            <h3>Doctor Appointments</h3>
+                            <p>Next: March 10</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <section class="streak-container">
+                <h3>Activity Streak</h3>
+                <div class="streak-grid" id="streakGrid"></div>
+                <div class="streak-video">
+                    <!-- Add your MP4 video here with loop attribute -->
+                </div>
+            </section>
+            
+            <section class="reminder-section">
+                <h3>Set Reminders</h3>
+                <input type="text" id="reminderInput" placeholder="Enter reminder...">
+                <button class="add-btn" onclick="addReminder()">Add</button>
+                <ul class="reminder-list" id="reminderList"></ul>
+            </section>
+        </main>
+    </div>
+    
+    <script>
+        // Chart initialization (unchanged)
+        const ctx = document.getElementById('pregnancyChart').getContext('2d');
+        const pregnancyChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['Week 10', 'Week 15', 'Week 20', 'Week 25', 'Week 30', 'Week 35'],
+                datasets: [{
+                    label: 'Weight Gain (kg)',
+                    data: [1, 2.5, 5, 7, 9, 12],
+                    backgroundColor: 'rgba(255, 99, 132, 0.5)',
+                    borderColor: 'rgba(255, 99, 132, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+        // Function to add a reminder
+        function addReminder() {
+            const input = document.getElementById('reminderInput');
+            const list = document.getElementById('reminderList');
+            if (input.value.trim() !== '') {
+                // Create a new list item with a remove button
+                const li = document.createElement('li');
+                li.textContent = input.value;
+
+                // Add a remove button
+                const removeBtn = document.createElement('button');
+                removeBtn.textContent = 'X';
+                removeBtn.classList.add('remove-btn');
+                removeBtn.onclick = function () {
+                    li.remove(); // Remove the task from the DOM
+                    saveRemindersToLocalStorage(); // Update local storage
+                };
+
+                li.appendChild(removeBtn); // Add the button to the list item
+                list.appendChild(li); // Add the list item to the list
+
+                // Save reminders to local storage
+                saveRemindersToLocalStorage();
+
+                // Clear the input field
+                input.value = '';
+            }
+        }
+
+        // Function to save reminders to local storage
+        function saveRemindersToLocalStorage() {
+            const reminders = [];
+            const reminderItems = document.querySelectorAll('#reminderList li');
+            reminderItems.forEach(item => {
+                // Extract the text content (excluding the remove button)
+                const taskText = item.childNodes[0].textContent;
+                reminders.push(taskText);
+            });
+            localStorage.setItem('reminders', JSON.stringify(reminders));
+        }
+
+        // Function to load reminders from local storage
+        function loadRemindersFromLocalStorage() {
+            const reminders = JSON.parse(localStorage.getItem('reminders')) || [];
+            const list = document.getElementById('reminderList');
+            reminders.forEach(reminder => {
+                // Create a new list item with a remove button
+                const li = document.createElement('li');
+                li.textContent = reminder;
+
+                // Add a remove button
+                const removeBtn = document.createElement('button');
+                removeBtn.textContent = 'X';
+                removeBtn.classList.add('remove-btn');
+                removeBtn.onclick = function () {
+                    li.remove(); // Remove the task from the DOM
+                    saveRemindersToLocalStorage(); // Update local storage
+                };
+
+                li.appendChild(removeBtn); // Add the button to the list item
+                list.appendChild(li); // Add the list item to the list
+            });
+        }
+
+        // Load reminders when the page loads
+        window.onload = function () {
+            loadRemindersFromLocalStorage();
+        };
+
+        // Streak generation (unchanged)
+        function generateStreak() {
+            const streakGrid = document.getElementById('streakGrid');
+            for (let i = 0; i < 300; i++) {
+                const box = document.createElement('div');
+                box.classList.add('streak-box');
+                if (Math.random() > 0.5) {
+                    box.classList.add('active');
+                }
+                streakGrid.appendChild(box);
+            }
+        }
+        generateStreak();
+    </script>
+</body>
+</html>

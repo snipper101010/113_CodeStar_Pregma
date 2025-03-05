@@ -1,0 +1,114 @@
+body, html {
+  margin: 0;
+  padding: 0;
+  font-family: 'Arial', sans-serif;
+  background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+  background-size: 400% 400%;
+  animation: gradientBG 15s ease infinite;
+  color: white;
+}
+
+@keyframes gradientBG {
+  0% {
+      background-position: 0% 50%;
+  }
+  50% {
+      background-position: 100% 50%;
+  }
+  100% {
+      background-position: 0% 50%;
+  }
+}
+
+header {
+  padding: 20px;
+  text-align: right;
+  justify-content: right;
+}
+
+nav ul {
+  list-style: none;
+  padding: 0;
+  justify-content: right;
+}
+
+nav ul li {
+  display: inline;
+  margin: 0 15px;
+  justify-content: righ
+}
+
+nav ul li a {
+  color: white;
+  text-decoration: none;
+  font-size: 18px;
+  transition: color 0.3s ease;
+}
+
+nav ul li a:hover {
+  padding: 10px;
+
+  border-radius: 10%;
+  background: rgba(0, 0, 0, 0.2);
+  transform: scale(1.1);
+}
+
+nav ul li a.active {
+  background: rgba(0, 0, 255, 0.2);
+  transform: scale(1.1);
+}
+
+nav ul li button {
+  padding: 12px 24px;
+  border: none;
+  border-radius: 50px;
+  background: linear-gradient(90deg, #ff8a00, #e52e71);
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  transition: 0.4s;
+  position: relative;
+  overflow: hidden;
+}
+
+nav ul li button:hover {
+  background: linear-gradient(90deg, #e52e71, #ff8a00);
+  transform: scale(1.05);
+}
+
+nav ul li button:after {
+  content: "";
+  background: rgba(255, 255, 255, 0.5);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 300px;
+  height: 300px;
+  border-radius: 100%;
+  transition: 0.4s;
+  z-index: 0;
+}
+
+#hero {
+  text-align: center;
+  padding: 100px 20px;
+}
+
+#hero h1 {
+  font-size: 48px;
+  margin-bottom: 20px;
+}
+
+#hero p {
+  font-size: 24px;
+}
+
+footer {
+  text-align: center;
+  padding: 20px;
+  background: rgba(0, 0, 0, 0.5);
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+}

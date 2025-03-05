@@ -1,0 +1,196 @@
+<!--
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pregnancy Shopping - PregMa</title>
+    <link rel="stylesheet" href="shop.css">
+</head>
+<body>
+    <header>
+        <h1>PregMa Store</h1>
+        <input type="text" id="search" placeholder="Search Products..." onkeyup="searchProducts()">
+    </header>
+
+    <section class="products">
+        <div class="product" data-name="Lacto Boost Milk Booster">
+            <img src="lactoboost.png" alt="Lacto Boost Milk Booster">
+            <h3>Lacto Boost Milk Booster</h3>
+            <p>$320</p>
+            <button>Add to Cart</button>
+        </div>
+
+        <div class="product" data-name="Pregnancy Tea">
+            <img src="mothertea.png" alt="Pregnancy Tea">
+            <h3>Mother’s Pregnancy Tea</h3>
+            <p>$250</p>
+            <button>Add to Cart</button>
+        </div>
+
+        <div class="product" data-name="Sickness Prevention Strips">
+            <img src="images/sickness.png" alt="Sickness Prevention Strips">
+            <h3>Sickness Prevention Strips</h3>
+            <p>$540</p>
+            <button>Add to Cart</button>
+        </div>
+    </section>
+
+    <script src="shop.js"></script>
+</body>
+</html>
+-->
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PregMa - Pregnancy Shopping</title>
+    <link rel="stylesheet" href="shop.css">
+</head>
+<body>
+   
+    <header>
+        <div class="logo">PregMa</div>
+        <nav>
+            <ul>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#products">Products</a></li>
+                <li><a href="#testimonials">Testimonials</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+   
+
+<section id="home" class="hero" style="background-color: rgb(255, 191, 225);">
+    <div class="hero-content">
+        <h1 class ="shop">Welcome to PregMa</h1>
+        <p>Your one-stop shop for all your pregnancy needs.</p>
+        <a href="#products">
+            <img 
+    src="https://i.ibb.co/7djJHJz4/Screenshot-2025-03-06-003906.png" 
+    alt="Explore Products" 
+    class="hero-icon" 
+    style="
+        width: 50%; 
+        height: 50%;
+        height: auto; 
+        border-radius: 50%; 
+        border: 4px solid #fff; 
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); 
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    "
+    onmouseover="this.style.transform='scale(1.1)'; this.style.boxShadow='0 8px 16px rgba(0, 0, 0, 0.5)';"
+    onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 4px 8px rgba(0, 0, 0, 0.3)';"
+>
+        </a>
+    </div>
+</section>
+
+   
+    <!--<section id="products" class="product-categories">
+        <h2>Shop by Category</h2>
+        <div class="category-grid">
+            <div class="category-card">
+                <img src="https://i.ibb.co/tpyg63db/Screenshot-2025-03-05-235412.png" alt="Maternity Wear">
+                <h3>Maternity Wear</h3>
+                <p>Comfortable and stylish clothing for expecting moms.</p>
+            </div>
+            <div class="category-card">
+                <img src="https://i.ibb.co/5g4TQXn0/Screenshot-2025-03-05-235917.png" alt="Skincare">
+                <h3>Mylo Lactomama</h3>
+                <p>Lactation Granules for breast milk.</p>
+            </div>
+            <div class="category-card">
+                <img src="https://i.ibb.co/ccd3r3Q1/Screenshot-2025-03-06-000608.png" alt="Baby Gear">
+                <h3>Baby Gear</h3>
+                <p>Essential items for your newborn.</p>
+            </div>
+        </div>
+    </section>
+-->
+<section id="products" class="product-categories">
+    <h2 class ="shop">Shop by Category</h2>
+    <div class="category-grid">
+        <div class="category-card">
+            <img src="https://i.ibb.co/tpyg63db/Screenshot-2025-03-05-235412.png" alt="Maternity Wear">
+            <h3>Maternity Wear</h3>
+            <p>Comfortable and stylish clothing for expecting moms.</p>
+        </div>
+        <div class="category-card">
+            <img src="https://i.ibb.co/5g4TQXn0/Screenshot-2025-03-05-235917.png" alt="Skincare">
+            <h3>Mylo Lactomama</h3>
+            <p>Lactation Granules for breast milk.</p>
+        </div>
+        <div class="category-card">
+            <img src="https://i.ibb.co/ccd3r3Q1/Screenshot-2025-03-06-000608.png" alt="Baby Gear">
+            <h3>Baby Gear</h3>
+            <p>Essential items for your newborn.</p>
+        </div>
+    </div>
+</section>
+
+   
+    <section id="testimonials" class="testimonials">
+        <h2>What Our Customers Say</h2>
+        <div class="testimonial-grid">
+            <div class="testimonial-card">
+                <img src="https://randomuser.me/api/portraits/women/2.jpg" alt="User">
+                <p>"The maternity wear is so comfortable! I love shopping here."</p>
+                <p class="testimonial-author">Emily Johnson</p>
+            </div>
+            <div class="testimonial-card">
+                <img src="https://randomuser.me/api/portraits/women/3.jpg" alt="User">
+                <p>"Great quality products and fast delivery. Highly recommend!"</p>
+                <p class="testimonial-author">Jessica Lee</p>
+            </div>
+            <div class="testimonial-card">
+                <img src="https://randomuser.me/api/portraits/men/3.jpg" alt="User">
+                <p>"My wife loved the pregnancy wellness kit. Thank you, MamaCare!"</p>
+                <p class="testimonial-author">David Martinez</p>
+            </div>
+        </div>
+    </section>
+
+   
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>About Pregma</h3>
+                <ul>
+                    <li><a href="#">Our Story</a></li>
+                    <li><a href="#">Careers</a></li>
+                    <li><a href="#">Press</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Customer Service</h3>
+                <ul>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Shipping Info</a></li>
+                    <li><a href="#">Returns</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Connect</h3>
+                <ul>
+                    <li><a href="#">Instagram</a></li>
+                    <li><a href="#">Twitter</a></li>
+                    <li><a href="#">Facebook</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Pregma. All rights reserved.</p>
+        </div>
+    </footer>
+
+   
+    <script src="shop.js"></script>
+</body>
+</html>
+

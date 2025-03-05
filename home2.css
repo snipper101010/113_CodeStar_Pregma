@@ -657,13 +657,223 @@ html {
     transform: translateY(-5px);
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
   }
+
+  /* General Styles */
+body, html {
+    margin: 0;
+    padding: 0;
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(135deg, #ff9a9e, #fad0c4); /* Coral and Pink Gradient */
+    color: #333;
+}
+
+header {
+    background: #6a1b9a; /* Purple */
+    color: white;
+    padding: 40px 20px;
+    text-align: center;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 32px;
+}
+
+header p {
+    margin: 10px 0 0;
+    font-size: 16px;
+}
+
+main {
+    padding: 20px;
+    max-width: 800px;
+    margin: 0 auto;
+}
+/* General Styles */
+body, html {
+    margin: 0;
+    padding: 0;
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(135deg, #ff9a9e, #fad0c4); /* Coral and Pink Gradient */
+    color: #333;
+    overflow-x: hidden;
+}
+
+/* Container for Horizontal Scroll */
+.container {
+    display: flex;
+    width: 300%; /* 3 sections = 300% */
+    transition: transform 0.5s ease;
+}
+
+/* Trimester Sections */
+.trimester {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.content {
+    max-width: 800px;
+    background: rgba(255, 255, 255, 0.9);
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    animation: fadeIn 1s ease;
+}
+
+h2 {
+    color: #6a1b9a; /* Purple */
+    font-size: 32px;
+    margin-bottom: 15px;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+p {
+    color: #555;
+    font-size: 18px;
+    line-height: 1.6;
+    margin-bottom: 20px;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+video {
+    width: 100%;
+    max-width: 600px;
+    border-radius: 10px;
+    margin-top: 20px;
+    animation: slideIn 1s ease;
+}
+
+/* Navigation Dots */
+.navigation-dots {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 15px; /* Increased gap for better spacing */
+}
+
+.dot {
+    width: 20px; /* Larger dots */
+    height: 20px; /* Larger dots */
+    background: #6a1b9a; /* Purple */
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.3s ease;
+}
+
+.dot.active {
+    background: #ff6f61; /* Coral */
+    transform: scale(1.2); /* Slightly enlarge active dot */
+}
+
+.dot:hover {
+    transform: scale(1.2); /* Enlarge on hover */
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateY(20px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/* FAQ Section */
+.faq-section {
+    background: white;
+    opacity: 0.7;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+}
+
+.faq-item {
+    border-bottom: 1px solid #ddd;
+    margin-bottom: 10px;
+}
+
+.faq-item:last-child {
+    border-bottom: none;
+}
+
+.faq-question {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    cursor: pointer;
+    font-size: 18px;
+    font-weight: bold;
+    color: #6a1b9a; /* Purple */
+    transition: background 0.3s ease;
+}
+
+.faq-question:hover {
+    background: #f9f9f9;
+}
+
+.faq-question .arrow {
+    font-size: 14px;
+    transition: transform 0.3s ease;
+}
+
+.faq-answer {
+    padding: 0 15px 15px;
+    display: none;
+    color: #555;
+    line-height: 1.6;
+}
+
+.faq-answer.open {
+    display: block;
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    padding: 20px;
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    margin-top: 40px;
+}
   
   footer {
     background: rgba(0, 0, 0, 0.9);
     color: white;
     padding: 40px 0;
     text-align: center;
-    border-top: 2px solid #ffdd57;
+    border-top: 2px solid coral;
 }
 
 .footer-content {
@@ -691,7 +901,7 @@ html {
 .footer-section h2 {
     margin-bottom: 15px;
     font-size: 24px;
-    color: #ffdd57;
+    color: coral;
     cursor: pointer;
 }
 
@@ -722,7 +932,7 @@ html {
 }
 
 .footer-section ul li a:hover {
-    color: #ffdd57;
+    color: coral;
     text-decoration: underline;
 }
 
@@ -755,7 +965,7 @@ html {
     padding: 12px 24px;
     border: none;
     border-radius: 5px;
-    background: #ffdd57;
+    background: coral;
     color: #333;
     font-size: 16px;
     cursor: pointer;
@@ -763,7 +973,7 @@ html {
 }
 
 .footer-section.contact-form button:hover {
-    background: #ffcc00;
+    background: coral;
     transform: scale(1.05);
 }
 

@@ -7,13 +7,18 @@
     <link rel="stylesheet" href="home.css">
 </head>
 <body>
+  <div class="video-background">
+    <video autoplay muted loop id="bg-video">
+        <source src="video_preview_h264.mp4" type="video/mp4">
+    </video>
+</div>
     <header>
         <nav>
             <ul>
                 <li><a href="#home">Home</a></li>
                 <li><a href="#about">About</a></li>
                 <li><a href="#services">Services</a></li>
-                <li><a href="#contact">Contact</a></li>
+                <li><a href="#Emergency Contacts">Contact</a></li>
                 <li><button class="glass-btn">Sign In / Sign Up</button></li>
             </ul>
         </nav>
@@ -22,10 +27,37 @@
     <section id="hero">
         <h1>Pregma</h1>
         <p>Your Guide Through Pregnancy</p>
+        
     </section>
 
     <footer>
-        <p>&copy; 2025 Pregma. All rights reserved.</p>
-    </footer>
+      <div class="footer-content">
+          <div class="footer-section about">
+              <h2 onclick="toggleAbout()">About Pregma <span id="arrow">▼</span></h2>
+              <p id="about-text" class="hidden">Pregma is dedicated to guiding women through every stage of their pregnancy. From prenatal care to postpartum support, we provide valuable resources and expert advice to ensure a healthy and happy pregnancy journey.</p>
+          </div>
+          <div class="footer-section links">
+              <h2>Quick Links</h2>
+              <ul>
+                  <li><a href="#home">Home</a></li>
+                  <li><a href="#about">About</a></li>
+                  <li><a href="#services">Services</a></li>
+                  <li><a href="#blog">Blog</a></li>
+                  <li><a href="#contact">Contact</a></li>
+              </ul>
+          </div>
+          <div class="footer-section contact-form">
+              <h2>Contact Us</h2>
+              <form action="#">
+                  <input type="email" placeholder="Your Email" required>
+                  <textarea placeholder="Your Message" required></textarea>
+                  <button type="submit">Send</button>
+              </form>
+          </div>
+      </div>
+      <div class="footer-bottom">
+          &copy; 2025 Pregma. All rights reserved.
+      </div>
+  </footer>
 </body>
 </html>

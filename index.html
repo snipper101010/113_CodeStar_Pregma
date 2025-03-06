@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recipe Dashboard</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+    <style>
+        /* Custom Colors */
+        body { background-color: #fce4ec; } /* Light Pink Background */
+        .text-coral { color: #ff6f61; } /* Coral Text */
+        .bg-coral { background-color: #ff6f61; } /* Coral Background */
+        .bg-purple { background-color: #6a1b9a; } /* Purple Background */
+        .text-purple { color: #6a1b9a; } /* Purple Text */
+
+        /* Button Styles */
+        .btn {
+            padding: 8px 12px;
+            border-radius: 5px;
+            transition: all 0.3s ease-in-out;
+            position: relative;
+            transform: translateZ(0);
+        }
+        .btn-coral {
+            background-color: #ff6f61;
+            color: white;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .btn-coral:hover {
+            transform: translateY(-5px) scale(1.05);
+            background-color: #ff8a80; /* Lighter Coral on Hover */
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+        .btn-purple {
+            background-color: #9a4fc9;
+            color: white;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .btn-purple:hover {
+            transform: translateY(-5px) scale(1.05);
+            background-color: #8e44ad; /* Lighter Purple on Hover */
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Recipe Card Styles */
+        .recipe-card {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            height: 100%; /* Ensure all cards are the same height */
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .recipe-img {
+            width: 100%;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+        .recipe-title {
+            font-weight: bold;
+            margin: 10px 0;
+            color: #080606; /* Coral Title */
+        }
+        .recipe-rating {
+            color: gray;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+
+        /* Navigation Links */
+        .nav-link {
+            display: block;
+            padding: 10px;
+            color: #333;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: all 0.3s ease-in-out;
+        }
+        .nav-link:hover {
+            background-color: #ff6f61; /* Coral Hover */
+            color: white;
+        }
+
+        /* Featured Recipes Section */
+        .featured-recipe {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            margin-top: 20px;
+        }
+        .featured-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #060505; /* Coral Title */
+        }
+        .featured-desc {
+            color: gray;
+            margin-top: 5px;
+        }
+
+        /* Switch Button Styles */
+        .switch-button {
+            padding: 8px 12px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease-in-out;
+            background-color: #e0e0e0; /* Default background */
+            color: #333; /* Default text color */
+        }
+        .switch-button.active {
+            background-color: #6a1b9a; /* Purple Active background */
+            color: white; /* Active text color */
+        }
+    </style>
+</head>
+<body class="bg-light-pink">
+    <div class="flex">
+        <!-- Sidebar -->
+        <aside class="w-1/5 bg-white p-5 h-screen shadow-lg">
+            <h1 class="text-2xl font-bold text-coral">Chefie</h1>
+            <div class="mt-5">
+                <img src="profile.png" class="w-16 h-16 rounded-full" alt="Theresa Webb">
+                <h2 class="text-lg font-semibold">Theresa Webb</h2>
+                <p class="text-sm text-gray-500">Mother</p>
+            </div>
+            <nav class="mt-5">
+                <ul>
+                    <li><a href="login.html" class="nav-link">LOG IN / SIGN UP</a></li>
+                    <li><a href="fitness.html" class="nav-link">Fitness</a></li>
+                    <li><a href="index.html" class="nav-link">Nutrition</a></li>
+                    <li><a href="shop.html" class="nav-link">Shop</a></li>
+                    <li><a href="home2.html" class="nav-link">About</a></li>
+                    <li><a href="https://form.typeform.com/to/GqIC0r3H" class="nav-link">Feedback</a></li>
+                   
+                </ul>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="w-4/5 p-5">
+            <!-- Search Bar and Button -->
+            <div class="flex items-center gap-2">
+                <input type="text" id="searchInput" placeholder="Search recipes..." class="search-bar flex-grow">
+                <button class="btn btn-coral" onclick="searchRecipes()">Search</button>
+            </div>
+
+            <h2 class="text-2xl font-bold text-coral mt-5">Mother Cravings , Let's learn and Cook </h2>
+            
+            <!-- Filter Buttons (Switch Style) -->
+            <div class="category-container mt-5 flex gap-2">
+                <button class="switch-button active" onclick="filterRecipes('all')">All</button>
+                <button class="switch-button" onclick="filterRecipes('veg')">Veg</button>
+                <button class="switch-button" onclick="filterRecipes('non-veg')">Non-Veg</button>
+            </div>
+
+            <!-- Regular Recipes Section -->
+            <div class="recipe-grid grid grid-cols-4 gap-6 mt-10" id="recipeGrid">
+                <!-- Recipe Cards will be dynamically populated here -->
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Recipe Data
+        const recipes = [
+            { name: "Oreo Shake", image: "oreoshake.png", type: "veg", rating: "⭐ 4.5 (7 Reviews)", link: "oreo.html" },
+            { name: "Veg-Salad", image: "vegsalad.png", type: "veg", rating: "⭐ 4.5 (7 Reviews)", link: "vegsalad.html" },
+            { name: "Veg-Soup", image: "vegsoup.png", type: "veg", rating: "⭐ 4.5 (7 Reviews)", link: "vegsoup.html" },
+            { name: "Brownie Cake", image: "brownie.png", type: "veg", rating: "⭐ 4.5 (7 Reviews)", link:"brownie.html"},
+            { name: "Special Salad Chicken", image: "pic1.png", type: "non-veg", rating: "⭐ 4.5 (7 Reviews)" },
+            { name: "Noodle Chicken", image: "pic2.png", type: "non-veg", rating: "⭐ 4.5 (7 Reviews)" },
+            { name: "Chicken with green veg", image: "pic3.png", type: "non-veg", rating: "⭐ 4.5 (7 Reviews)" },
+            { name: "Chicken-Soup", image: "chickensoup.png", type: "non-veg", rating: "⭐ 4.5 (7 Reviews)" },
+            { name: "Avocado Toast", image: "avocadotoast.png", type: "veg", rating: "⭐ 4.5 (7 Reviews)" },
+            { name: "Chickpea Salad", image: "chicpeasalad.png", type: "veg", rating: "⭐ 4.5 (7 Reviews)" },
+            { name: "Noodles", image: "noodle.png", type: "veg", rating: "⭐ 4.5 (7 Reviews)" },
+            { name: "Ice-cream Waffle", image: "ice-cream-waffle.png", type: "veg", rating: "⭐ 4.5 (7 Reviews)" },
+        ];
+            // Add other recipes here
+        
+
+        // Function to render recipes
+        function renderRecipes(filteredRecipes) {
+            const recipeGrid = document.getElementById("recipeGrid");
+            recipeGrid.innerHTML = ""; // Clear existing cards
+
+            filteredRecipes.forEach(recipe => {
+                console.log(`Rendering recipe: ${recipe.name}, Link: ${recipe.link}`); // Debugging
+                const card = `
+                    <div class="recipe-card">
+                        <img src="${recipe.image}" class="recipe-img">
+                        <h3 class="recipe-title">${recipe.name}</h3>
+                        <p class="recipe-rating">${recipe.rating}</p>
+                        <a href="${recipe.link}" class="btn btn-coral">View Recipe</a>
+                    </div>
+                `;
+                recipeGrid.innerHTML += card;
+            });
+        }
+
+        // Function to filter recipes by type (veg/non-veg/all)
+        function filterRecipes(type) {
+            const buttons = document.querySelectorAll(".switch-button");
+            buttons.forEach(button => button.classList.remove("active")); // Remove active class from all buttons
+            const activeButton = document.querySelector(`.switch-button[onclick="filterRecipes('${type}')"]`);
+            activeButton.classList.add("active"); // Add active class to the clicked button
+
+            let filteredRecipes = recipes;
+            if (type !== "all") {
+                filteredRecipes = recipes.filter(recipe => recipe.type === type);
+            }
+            renderRecipes(filteredRecipes);
+        }
+
+        // Function to search recipes by name
+        function searchRecipes() {
+            const searchTerm = document.getElementById("searchInput").value.toLowerCase();
+            const filteredRecipes = recipes.filter(recipe => recipe.name.toLowerCase().includes(searchTerm));
+            renderRecipes(filteredRecipes);
+        }
+
+        // Initial render (show all recipes)
+        renderRecipes(recipes);
+    </script>
+</body>
+</html>
